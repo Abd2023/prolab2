@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -46,30 +47,90 @@ namespace prolab2_projeee
 
         }
 
+
+
+        string[][] routesSefer = new string[][]
+        {
+            new string[] { "İstanbul", "Kocaeli", "Bilecik", "Eskişehir", "Ankara", "Eskişehir", "Bilecik", "Kocaeli", "İstanbul" },
+            new string[] { "İstanbul", "Kocaeli", "Bilecik", "Eskişehir", "Konya", "Eskişehir", "Bilecik", "Kocaeli", "İstanbul" },
+
+            new string[] { "İstanbul", "Kocaeli", "Ankara", "Kocaeli", "İstanbul", "Kocaeli", "Ankara", "Kocaeli", "İstanbul" },
+            new string[] { "İstanbul", "Kocaeli", "Eskişehir", "Konya", "Eskişehir", "Kocaeli", "İstanbul" },
+
+            new string[] {  "İstanbul", "Konya", "İstanbul" },
+            new string[] { "İstanbul", "Ankara", "İstanbul" },
+            // Diğer güzergahlar...
+        };
+
+
+
         private void bttnBiletAra_Click(object sender, EventArgs e)
         {
+            
             // Kullanıcının seçtiği kalkış ve varış noktalarını alın
             string departure = NeredencomboBox.SelectedItem.ToString();
             string arrival = NereyecomboBox.SelectedItem.ToString();
 
-            // Arama anahtarını oluşturun
-            string searchKey = departure + "-" + arrival;
+            List<int> uygubSerferler = new List<int>();
 
-            // Güzergahları arayın
-            foreach (var route in routes)
+            for (int i = 0; i < routesSefer.Length; i++)
             {
-                if (route.ContainsKey(searchKey))
+                for (int j = 0; j < routesSefer[i].Length; j++)
                 {
-                    // Maliyeti bulun ve kullanıcıya gösterin
-                    int cost = route[searchKey];
-                    MessageBox.Show("Seçilen güzergahın maliyeti: " + cost.ToString());
-                    return;
+                    if (routesSefer[i][j] == departure)
+                    {
+                        for (int k = 0; k < routesSefer[i].Length; k++)
+                        {
+                            if (routesSefer[i][k] == arrival)
+                            {
+                                if (!uygubSerferler.Contains(i + 1))
+                                    uygubSerferler.Add(i + 1);
+                                break;
+                            }
+                        }
+                    }
                 }
+
+                
+
             }
 
-            // Eğer buraya kadar geldiyse, seçilen güzergah bulunamadı
-            MessageBox.Show("Seçilen güzergah bulunamadı.");
+            for (int i = 0; i < uygubSerferler.Count; i++)
+            {
+                MessageBox.Show(uygubSerferler[i].ToString());
+            }
+
+            
+
+            MessageBox.Show("how are you");
         }
 
+        
+
+
+        /*
+        // Arama anahtarını oluşturun
+        string searchKey = departure + "-" + arrival;
+
+        // Güzergahları arayın
+        foreach (var route in routes)
+        {
+            if (route.ContainsKey(searchKey))
+            {
+                // Maliyeti bulun ve kullanıcıya gösterin
+                int cost = route[searchKey];
+                MessageBox.Show("Seçilen güzergahın maliyeti: " + cost.ToString());
+                return;
+            }
+        }
+
+        // Eğer buraya kadar geldiyse, seçilen güzergah bulunamadı
+        MessageBox.Show("Seçilen güzergah bulunamadı.");
+
+        */
     }
+        
+        
+
 }
+
