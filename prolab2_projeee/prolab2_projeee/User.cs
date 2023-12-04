@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace prolab2_projeee
 {
@@ -42,15 +43,28 @@ namespace prolab2_projeee
     }
 
 
+
+
+    
+
+
     
     public class Company : User
     {
 
         public string name { get; set; }
+        public string Name { get; set; }
         public string type { get; set; }
         public decimal serviceFee { get; set; }
+        public List<Vehicle> Vehicles { get; set; } // Araç bilgileri
+
+        
 
 
+
+        
+
+        
 
         // Firmaya özgü işlevler burada tanımlanır
         // Gerekirse, User classından metotlar override edilir
@@ -60,12 +74,12 @@ namespace prolab2_projeee
 
         public void AddVehicle(Vehicle vehicle)
         {
-            // Araç ekleme işlemi
+            Vehicles.Add(vehicle); // Araç ekleme işlemi
         }
 
         public void RemoveVehicle(Vehicle vehicle)
         {
-            // Araç çıkarma işlemi
+            Vehicles.Remove(vehicle); // Araç çıkarma işlemi
         }
 
         private List<Trip> trips; // Sefer bilgileri
@@ -94,6 +108,7 @@ namespace prolab2_projeee
         }
 
     }
+    
 
     
 
