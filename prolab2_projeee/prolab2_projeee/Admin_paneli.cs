@@ -66,5 +66,9 @@ namespace prolab2_projeee
             }
         }
 
+        private void Admin_paneli_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

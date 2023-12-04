@@ -37,6 +37,13 @@
             this.TcNumaraTxt = new System.Windows.Forms.TextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.bttnKaydit = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -90,6 +97,7 @@
             this.txtYolcuAd.Name = "txtYolcuAd";
             this.txtYolcuAd.Size = new System.Drawing.Size(205, 22);
             this.txtYolcuAd.TabIndex = 4;
+            this.txtYolcuAd.TextChanged += new System.EventHandler(this.txtYolcuAd_TextChanged);
             // 
             // yolcuSoyadTxt
             // 
@@ -97,6 +105,7 @@
             this.yolcuSoyadTxt.Name = "yolcuSoyadTxt";
             this.yolcuSoyadTxt.Size = new System.Drawing.Size(205, 22);
             this.yolcuSoyadTxt.TabIndex = 5;
+            this.yolcuSoyadTxt.TextChanged += new System.EventHandler(this.yolcuSoyadTxt_TextChanged);
             // 
             // TcNumaraTxt
             // 
@@ -104,6 +113,7 @@
             this.TcNumaraTxt.Name = "TcNumaraTxt";
             this.TcNumaraTxt.Size = new System.Drawing.Size(205, 22);
             this.TcNumaraTxt.TabIndex = 6;
+            this.TcNumaraTxt.TextChanged += new System.EventHandler(this.TcNumaraTxt_TextChanged);
             // 
             // dateTimePicker1
             // 
@@ -111,23 +121,74 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
             this.dateTimePicker1.TabIndex = 7;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // bttnKaydit
             // 
             this.bttnKaydit.BackColor = System.Drawing.Color.LimeGreen;
-            this.bttnKaydit.Location = new System.Drawing.Point(973, 392);
+            this.bttnKaydit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.bttnKaydit.Location = new System.Drawing.Point(940, 380);
             this.bttnKaydit.Name = "bttnKaydit";
-            this.bttnKaydit.Size = new System.Drawing.Size(127, 44);
+            this.bttnKaydit.Size = new System.Drawing.Size(170, 78);
             this.bttnKaydit.TabIndex = 8;
             this.bttnKaydit.Text = "Kaydet";
             this.bttnKaydit.UseVisualStyleBackColor = false;
             this.bttnKaydit.Click += new System.EventHandler(this.bttnKayit_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5});
+            this.dataGridView1.Location = new System.Drawing.Point(159, 499);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(773, 150);
+            this.dataGridView1.TabIndex = 9;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Adiniz ";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Soyadınız";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "TC numaranız ";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Doğum Tarihi";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Koltuk Numaranız";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
             // 
             // Kayit_formu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1244, 661);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.bttnKaydit);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.TcNumaraTxt);
@@ -139,6 +200,8 @@
             this.Controls.Add(this.label1);
             this.Name = "Kayit_formu";
             this.Text = "Kayit_formu";
+            this.Load += new System.EventHandler(this.Kayit_formu_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,5 +218,11 @@
         private System.Windows.Forms.TextBox TcNumaraTxt;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button bttnKaydit;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }

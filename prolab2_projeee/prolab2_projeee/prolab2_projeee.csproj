@@ -58,6 +58,12 @@
       <DependentUpon>Admin_paneli.cs</DependentUpon>
     </Compile>
     <Compile Include="Customer.cs" />
+    <Compile Include="firmapanelinegirispaneli.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="firmapanelinegirispaneli.Designer.cs">
+      <DependentUpon>firmapanelinegirispaneli.cs</DependentUpon>
+    </Compile>
     <Compile Include="Kayit_formu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin_paneli.resx">
       <DependentUpon>Admin_paneli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="firmapanelinegirispaneli.resx">
+      <DependentUpon>firmapanelinegirispaneli.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kayit_formu.resx">
       <DependentUpon>Kayit_formu.cs</DependentUpon>
