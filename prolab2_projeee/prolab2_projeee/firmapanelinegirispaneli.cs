@@ -34,6 +34,8 @@ namespace prolab2_projeee
             sirketler.Add(companyF);
         }
 
+        //asdfasf
+
         private void bttnGiris_Click(object sender, EventArgs e)
         {
             string firmaAdi = txtBoxfirmaAdi.Text; ;
