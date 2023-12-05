@@ -30,5 +30,10 @@ namespace prolab2_projeee
             form.ShowDialog();
         }
 
+        private void firmabttn_Click(object sender, EventArgs e)
+        {
+            firmapanelinegirispaneli firmaPaneli = new firmapanelinegirispaneli();
+            firmaPaneli.Show();
+        }
     }
 }

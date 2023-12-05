@@ -30,8 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtBoxfirmaAdi = new System.Windows.Forms.TextBox();
+            this.textBoxFirmaSifresi = new System.Windows.Forms.TextBox();
             this.bttnGiris = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -53,19 +53,19 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Firma şifresi";
             // 
-            // textBox1
+            // txtBoxfirmaAdi
             // 
-            this.textBox1.Location = new System.Drawing.Point(344, 70);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(173, 22);
-            this.textBox1.TabIndex = 2;
+            this.txtBoxfirmaAdi.Location = new System.Drawing.Point(344, 70);
+            this.txtBoxfirmaAdi.Name = "txtBoxfirmaAdi";
+            this.txtBoxfirmaAdi.Size = new System.Drawing.Size(173, 22);
+            this.txtBoxfirmaAdi.TabIndex = 2;
             // 
-            // textBox2
+            // textBoxFirmaSifresi
             // 
-            this.textBox2.Location = new System.Drawing.Point(344, 134);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(173, 22);
-            this.textBox2.TabIndex = 3;
+            this.textBoxFirmaSifresi.Location = new System.Drawing.Point(344, 134);
+            this.textBoxFirmaSifresi.Name = "textBoxFirmaSifresi";
+            this.textBoxFirmaSifresi.Size = new System.Drawing.Size(173, 22);
+            this.textBoxFirmaSifresi.TabIndex = 3;
             // 
             // bttnGiris
             // 
@@ -83,8 +83,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 468);
             this.Controls.Add(this.bttnGiris);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxFirmaSifresi);
+            this.Controls.Add(this.txtBoxfirmaAdi);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "firmapanelinegirispaneli";
@@ -99,8 +99,8 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtBoxfirmaAdi;
+        private System.Windows.Forms.TextBox textBoxFirmaSifresi;
         private System.Windows.Forms.Button bttnGiris;
     }
 }

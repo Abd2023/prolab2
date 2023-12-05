@@ -51,6 +51,7 @@
             this.firmabttn.TabIndex = 1;
             this.firmabttn.Text = "Firma";
             this.firmabttn.UseVisualStyleBackColor = true;
+            this.firmabttn.Click += new System.EventHandler(this.firmabttn_Click);
             // 
             // kullanicibttn
             // 

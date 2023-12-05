@@ -12,8 +12,13 @@ namespace prolab2_projeee
 {
     public partial class firmapanelinegirispaneli : Form
     {
-
         public List<Company> sirketler = new List<Company>();
+
+        Company companyA = new Company { name = "A", sifre = "afirmasi" };
+        Company companyB = new Company { name = "B", sifre = "bfirmasi" };
+        Company companyC = new Company { name = "C", sifre = "cfirmasi" };
+        Company companyD = new Company { name = "D", sifre = "dfirmasi" };
+        Company companyF = new Company { name = "F", sifre = "Ffirmasi" };
 
         public firmapanelinegirispaneli()
         {
@@ -22,21 +27,38 @@ namespace prolab2_projeee
 
         private void firmapanelinegirispaneli_Load(object sender, EventArgs e)
         {
-
+            sirketler.Add(companyA);
+            sirketler.Add(companyB);
+            sirketler.Add(companyC);
+            sirketler.Add(companyD);
+            sirketler.Add(companyF);
         }
 
         private void bttnGiris_Click(object sender, EventArgs e)
         {
-            string firmaAdi = textBox1.Text; ;
-            string firmaPassword = textBox2.Text;
-            /*
-            sirketler.Add(new Company("A", "afirmasi"));
-            sirketler.Add(new Company("B", "bfirmasi"));
-            sirketler.Add(new Company("C", "cfirmasi"));
-            sirketler.Add(new Company("D", "dfirmasi"));
-            sirketler.Add(new Company("F", "ffirmasi"));
-            */
+            string firmaAdi = txtBoxfirmaAdi.Text; ;
+            string firmaPassword = textBoxFirmaSifresi.Text;
+            bool girisBasarili = false;
 
+            foreach (Company company in sirketler)
+            {
+                if (firmaAdi == company.name && firmaPassword == company.sifre)
+                {
+                    MessageBox.Show("giris basarili");
+                    girisBasarili = true;
+
+                    // firma paneline yonlendir
+                    //Firmapanelics firmaPaneli = new Firmapanelics();
+                    //firmaPaneli.Show();
+                    break;
+                }
+            }
+
+            if (!girisBasarili)
+            {
+                MessageBox.Show("Başarısız");
+            }
         }
+
     }
 }

@@ -56,6 +56,8 @@ namespace prolab2_projeee
         public string Name { get; set; }
         public string type { get; set; }
         public decimal serviceFee { get; set; }
+
+        public string sifre { get; set; }
        // public string  password { get; set; }
         public List<Vehicle> Vehicles { get; set; } // Araç bilgileri
 
