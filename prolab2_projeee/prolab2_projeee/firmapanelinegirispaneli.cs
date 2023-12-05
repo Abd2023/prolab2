@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 namespace prolab2_projeee
@@ -13,6 +15,8 @@ namespace prolab2_projeee
     public partial class firmapanelinegirispaneli : Form
     {
         public List<Company> sirketler = new List<Company>();
+
+        public static string Firma_Adi { get; private set; }  
 
         Company companyA = new Company { name = "A", sifre = "afirmasi" };
         Company companyB = new Company { name = "B", sifre = "bfirmasi" };
@@ -46,8 +50,12 @@ namespace prolab2_projeee
             {
                 if (firmaAdi == company.name && firmaPassword == company.sifre)
                 {
+                    Firma_Adi = firmaAdi;
                     MessageBox.Show("giris basarili");
                     girisBasarili = true;
+
+                    FirmaPaneli firmaPaneli = new FirmaPaneli();
+                    firmaPaneli.Show();
 
                     // firma paneline yonlendir
                     //Firmapanelics firmaPaneli = new Firmapanelics();
