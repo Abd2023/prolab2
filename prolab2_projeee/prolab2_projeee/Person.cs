@@ -14,6 +14,13 @@ namespace prolab2_projeee
     public class Personel : Person
     {
         // Personel bilgileri burada tanımlanır
+
+
+        public int AfirmasiTopolamOtobusOdenenUcret = 14000;
+
+
+
+
     }
 
     public class Passenger : Person

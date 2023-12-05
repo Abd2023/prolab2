@@ -22,7 +22,7 @@ namespace prolab2_projeee
         Company companyB = new Company { name = "B", sifre = "bfirmasi" };
         Company companyC = new Company { name = "C", sifre = "cfirmasi" };
         Company companyD = new Company { name = "D", sifre = "dfirmasi" };
-        Company companyF = new Company { name = "F", sifre = "Ffirmasi" };
+        Company companyF = new Company { name = "F", sifre = "ffirmasi" };
 
         public firmapanelinegirispaneli()
         {

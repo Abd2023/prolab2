@@ -90,6 +90,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RastgeleYolcuHesabi.cs" />
     <Compile Include="Reservation.cs" />
     <Compile Include="Rezervasiyon_Sistemi.cs">
       <SubType>Form</SubType>

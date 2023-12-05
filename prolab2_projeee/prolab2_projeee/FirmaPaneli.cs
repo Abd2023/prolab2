@@ -214,5 +214,103 @@ namespace prolab2_projeee
             comboBox6.Text = zaman;
             textBox2.Text = fiyat;
         }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+      
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int isciUcretleritoplami=0;
+            int yakitgideri = 0;
+            int hizmetbedeli = 1000;
+            int toplamGider = 0;
+            
+
+            if(girisyapilanfirmaadi=="A")
+            {
+                isciUcretleritoplami = 7000*2*2;
+                yakitgideri = 500 * 10 * 2;
+                toplamGider=isciUcretleritoplami+yakitgideri+hizmetbedeli;
+
+
+            }
+            else if(girisyapilanfirmaadi == "B") 
+            {
+                isciUcretleritoplami = 4500*2*2;
+                yakitgideri = 500 * 5 * 2;
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi=="C") 
+            {
+                isciUcretleritoplami = (6000*2)+(16000*2*2);
+                yakitgideri = (600 * 6) + (300 * 25) * 2;
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi == "D")
+            {
+                isciUcretleritoplami = 3000*2*3;
+                yakitgideri = (375 * 3) + (450*3*2);
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi =="F")
+            {
+                isciUcretleritoplami = 11500*2*2;
+                yakitgideri = (250 * 20 * 2);
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+
+
+            RastgeleYolcuHesabi rastgeleYolcuHesabi = new RastgeleYolcuHesabi();
+            int abdullah1 = rastgeleYolcuHesabi.Toplambiletsatisi();
+            dataGridView3.Rows.Add( abdullah1,isciUcretleritoplami.ToString() , yakitgideri.ToString(),hizmetbedeli,toplamGider,abdullah1-toplamGider);
+
+            
+
+
+
+
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
     }
 }
