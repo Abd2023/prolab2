@@ -73,6 +73,7 @@
             this.Controls.Add(this.adminbttn);
             this.Name = "Rezervasiyon_Sistemi";
             this.Text = "Rezervasiyon_Sistemi";
+            this.Load += new System.EventHandler(this.Rezervasiyon_Sistemi_Load);
             this.ResumeLayout(false);
 
         }

@@ -24,7 +24,6 @@ namespace prolab2_projeee
         {
             if (!koltukRezerveMI)
             {
-                // Logic to reserve the seat
                 koltukRezerveMI = true;
                 Console.WriteLine("Seat reserved successfully.");
             }
@@ -38,7 +37,6 @@ namespace prolab2_projeee
         {
             if (koltukRezerveMI)
             {
-                // Logic to cancel the reservation
                 koltukRezerveMI = false;
                 Console.WriteLine("Reservation canceled successfully.");
             }

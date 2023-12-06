@@ -270,12 +270,6 @@ namespace prolab2_projeee
             int abdullah1 = rastgeleYolcuHesabi.Toplambiletsatisi();
             dataGridView3.Rows.Add( abdullah1,isciUcretleritoplami.ToString() , yakitgideri.ToString(),hizmetbedeli,toplamGider,abdullah1-toplamGider);
 
-            
-
-
-
-
-
         }
 
         private void button8_Click(object sender, EventArgs e)

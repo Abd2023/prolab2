@@ -8,16 +8,12 @@ namespace prolab2_projeee
 {
     public abstract class Vehicle
     {
-        // Her araca ait ortak özellikler burada tanımlanır
-        // Burada CalculateFuelCost() gibi gerekli metotlar kullanılır
         public string HangiFirma { get; set; }
         public string AracID { get; set; }
         public string YakitTuru { get; set; }
         public string Kapasite { get; set; }
         public string SeferNo { get; set; }
-
     }
-
 
     public class Otobus : Vehicle
     {
@@ -35,8 +31,6 @@ namespace prolab2_projeee
 
     public class Bus : Vehicle
     {
-        // Otobüse ait özellikler burada tanımlanır
-        // Gerekirse, Vehicle classından metotlar override edilir
         public Bus(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
         {
             this.HangiFirma = hangifirma;
@@ -54,14 +48,10 @@ namespace prolab2_projeee
             this.Kapasite = koltukSayisi;
             this.SeferNo = seferNo;
         }
-
-
     }
 
     public class Train : Vehicle
     {
-        // Trene ait özel özellikler burada tanımlanır
-        // Gerekirse, Vehicle classından metotlar override edilir
         public Train(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
         {
             this.HangiFirma = hangifirma;
@@ -70,13 +60,10 @@ namespace prolab2_projeee
             this.Kapasite = kapasite;
             this.SeferNo = seferno;
         }
-
     }
 
     public class Airplane : Vehicle
     {
-        // Uçağa özel özellikler burada tanımlanır
-        // Gerekirse, Vehicle classından metotlar override edilir
         public Airplane(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
         {
             this.HangiFirma = hangifirma;
@@ -85,7 +72,5 @@ namespace prolab2_projeee
             this.Kapasite = kapasite;
             this.SeferNo = seferno;
         }
-
-
     }
 }

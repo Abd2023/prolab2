@@ -82,7 +82,6 @@ namespace prolab2_projeee
 
             new string[] {  "İstanbul", "Konya", "İstanbul" },
             new string[] { "İstanbul", "Ankara", "İstanbul" },
-            // Diğer güzergahlar...
         };
 
 
@@ -112,7 +111,6 @@ namespace prolab2_projeee
 
             dataGridView1.Rows.Clear();
             
-            // Kullanıcının seçtiği kalkış ve varış noktalarını alın
             string departure = NeredencomboBox.SelectedItem.ToString();
             string arrival = NereyecomboBox.SelectedItem.ToString();
 
@@ -140,19 +138,14 @@ namespace prolab2_projeee
 
             }
             
-        // Arama anahtarını oluşturun
         string searchKey = departure + "-" + arrival;
 
-            // Güzergahları arayın
         int costDemiryolu = 0;
         foreach (var route in routesDemiryolu)
         {
             if (route.ContainsKey(searchKey))
             {
-                // Maliyeti bulun ve kullanıcıya gösterin
                 costDemiryolu = route[searchKey];
-                //MessageBox.Show("Seçilen güzergahın karayolu için maliyeti: " + costKarayolu.ToString());
-                //return;
             }
         }
         int costKarayolu = 0;
@@ -160,10 +153,7 @@ namespace prolab2_projeee
         {
             if (route.ContainsKey(searchKey))
             {
-                // Maliyeti bulun ve kullanıcıya gösterin
                 costKarayolu = route[searchKey];
-                //MessageBox.Show("Seçilen güzergahın Karayolu için maliyeti: " + cost.ToString());
-                //return;
             }
         }
 
@@ -172,9 +162,7 @@ namespace prolab2_projeee
         {
             if (route.ContainsKey(searchKey))
             {
-                // Maliyeti bulun ve kullanıcıya gösterin
                 costHavayolu = route[searchKey];
-                //MessageBox.Show("Seçilen güzergahın hava yolu için maliyeti: " + cost.ToString());
                 
             }
         }
@@ -215,17 +203,17 @@ namespace prolab2_projeee
         {
             if (e.RowIndex >= 0)
             {
-                // Çift tıklanan satırdaki 'koltuk_sayisi' değerini alın
                 koltuk_sayisi = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
 
-                // 'koltuk_sayisi' değerini 'Kayit_formu' formuna geçirin
                 Kayit_formu form = new Kayit_formu(koltuk_sayisi);
                 form.ShowDialog();
             }
         }
 
+        private void Kullanici_paneli_Load(object sender, EventArgs e)
+        {
 
-
+        }
     }
 
 

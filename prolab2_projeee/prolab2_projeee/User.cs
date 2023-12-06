@@ -31,7 +31,6 @@ namespace prolab2_projeee
         {
             throw new NotImplementedException();
         }
-        // User classında ortak özellikler ve metotlar burada tanımlanır
     }
 
 
@@ -43,22 +42,17 @@ namespace prolab2_projeee
 
 
 
-        // Admin'e özgü özellikler ve metotlar burada tanımlanır
         public List<Company> Companies { get; set; }
-        // Var olan firmalar görüntülenebilir
 
         public void AddCompany(Company company)
         {
-            // Yeni bir firma kaydı yapılabilir
         }
 
         public void RemoveCompany(Company company)
         {
-            // Firma kaydı silinebilir
         }
 
         public decimal ServiceFee { get; set; }
-        // Hizmet bedeli belirlenebilmelidir (Hizmet bedelinin sabit günlük bir ücret belirlenmelidir - 1000 tl) 
 
     }
 

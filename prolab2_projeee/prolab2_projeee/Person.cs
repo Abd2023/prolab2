@@ -10,13 +10,11 @@ namespace prolab2_projeee
 
     public class Personel : Person
     {
-        // Personel bilgileri burada tanımlanır
         public int AfirmasiTopolamOtobusOdenenUcret = 14000;
     }
 
     public class Passenger : Person
     {
-        // Yolcu bilgileri burada tanımlanır
         public bool HasReservation { get; set; }
 
         public void MakeReservation()

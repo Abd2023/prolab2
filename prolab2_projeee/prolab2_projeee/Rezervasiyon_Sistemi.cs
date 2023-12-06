@@ -35,5 +35,10 @@ namespace prolab2_projeee
             firmapanelinegirispaneli firmaPaneli = new firmapanelinegirispaneli();
             firmaPaneli.Show();
         }
+
+        private void Rezervasiyon_Sistemi_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

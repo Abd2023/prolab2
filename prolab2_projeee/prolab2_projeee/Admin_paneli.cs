@@ -27,26 +27,21 @@ namespace prolab2_projeee
 
         }
 
-        // Kullanıcı adları ve şifreler için bir Dictionary oluşturun
         Dictionary<string, string> users = new Dictionary<string, string>()
         {
              { "a", "b" },
-               // Diğer kullanıcıları buraya ekleyin
         };
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (usrtxt.Text != string.Empty && passtxt.Text != string.Empty)
             {
-                // Kullanıcının var olup olmadığını kontrol edin
                 if (users.ContainsKey(usrtxt.Text))
                 {
-                    // Şifrenin doğru olup olmadığını kontrol edin
                     if (users[usrtxt.Text] == passtxt.Text)
                     {
                         MessageBox.Show("login Admin");
 
-                        // Yeni bir AdminForm oluşturun ve gösterin
                         AdminForm adminForm = new AdminForm();
                         adminForm.Show();
                     }

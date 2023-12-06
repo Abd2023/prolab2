@@ -28,7 +28,6 @@ namespace prolab2_projeee
         }
 
 
-        // Seferin aracı, güzergahı, zamanı, fiyatı gibi bilgiler burada tanımlanır
     }
 
 }

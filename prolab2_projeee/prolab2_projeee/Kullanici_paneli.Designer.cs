@@ -206,6 +206,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Kullanici_paneli";
             this.Text = "Kullanici_paneli";
+            this.Load += new System.EventHandler(this.Kullanici_paneli_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
