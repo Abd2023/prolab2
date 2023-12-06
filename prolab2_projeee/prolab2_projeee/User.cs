@@ -7,10 +7,30 @@ using System.Xml.Linq;
 
 namespace prolab2_projeee
 {
-    public abstract class User
+
+    public interface IProfitable
+    {
+        void gunlukKarhesabi();
+        void genelKarhesabi();
+    }
+
+    
+
+
+    public interface ILoginable
+    {
+        bool Login(string enteredUsername, string enteredPassword);
+    }
+
+    public abstract class User : ILoginable
     {
         protected string username;
         protected string password;
+
+        public bool Login(string enteredUsername, string enteredPassword)
+        {
+            throw new NotImplementedException();
+        }
         // User classında ortak özellikler ve metotlar burada tanımlanır
     }
 
@@ -45,79 +65,85 @@ namespace prolab2_projeee
 
 
 
-    
 
 
-    
-    public class Company : User
+
+
+    public class Company : User, IProfitable, IReservable
     {
-
         public string name { get; set; }
         public string Name { get; set; }
         public string type { get; set; }
         public decimal serviceFee { get; set; }
 
         public string sifre { get; set; }
-       // public string  password { get; set; }
-        public List<Vehicle> Vehicles { get; set; } // Araç bilgileri
+        public List<Vehicle> Vehicles { get; set; }
 
-        /*
-        public  Company (string firmaadi , string sifre)
-        {
-            this.name = firmaadi;
-            this.password = sifre;
-        }
-        */
-
-        
-
-        
-
-        // Firmaya özgü işlevler burada tanımlanır
-        // Gerekirse, User classından metotlar override edilir
-        // Firma paneli için gerekli özellikler ve metotlar burada tanımlanır
-        private List<Vehicle> vehicles; // Araç bilgileri
-                                        // Araç ekleme ve çıkarma işlemleri için metotlar
+        private List<Vehicle> vehicles;
+        private List<Trip> trips;
 
         public void AddVehicle(Vehicle vehicle)
         {
-            Vehicles.Add(vehicle); // Araç ekleme işlemi
+            Vehicles.Add(vehicle);
         }
 
         public void RemoveVehicle(Vehicle vehicle)
         {
-            Vehicles.Remove(vehicle); // Araç çıkarma işlemi
+            Vehicles.Remove(vehicle);
         }
-
-        private List<Trip> trips; // Sefer bilgileri
-                                  // Sefer ekleme ve çıkarma işlemleri için metotlar
 
         public void AddTrip(Trip trip)
         {
-            // Sefer ekleme işlemi
+            // Add trip logic
         }
 
         public void RemoveTrip(Trip trip)
         {
-            // Sefer çıkarma işlemi
+            // Remove trip logic
         }
 
         public decimal CalculateDailyProfit()
         {
-            // Günlük kar hesabı yapılır
-            // Yolcu ücretleri, hizmet bedeli, personel maliyeti ve yakıt maliyeti dikkate alınarak hesaplanır
-
-            decimal dailyProfit = 0;
-
-            // dailyProfit hesaplama kodunuz burada olacak
-
-            return dailyProfit;
+            // Calculate daily profit logic
+            return 0; // Placeholder, replace with actual calculation
         }
 
-    }
-    
+        public void gunlukKarhesabi()
+        {
+            // Implement the daily profit calculation logic
+        }
 
-    
+        public void genelKarhesabi()
+        {
+            // Implement the general profit calculation logic
+        }
+
+        public bool IsSeatReserved { get; set; }
+        public bool koltukRezerveMI { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void ReserveSeat()
+        {
+            // Implement seat reservation logic
+        }
+
+        public void CancelReservation()
+        {
+            // Implement seat cancellation logic
+        }
+
+        public void KoltukRezervet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IptalRezervasyon()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+
 
     public class UserPanel : User
     {

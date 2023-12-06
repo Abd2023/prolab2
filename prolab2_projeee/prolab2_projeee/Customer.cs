@@ -14,5 +14,40 @@ namespace prolab2_projeee
         public string TcNumara { get; set; }
         public DateTime DogumTarihi { get; set; }
         public int KoltukNo { get; set; }
+
+
+
+        public int SeatNumber { get; set; }
+        public bool IsSeatReserved { get; private set; }
+
+        public void ReserveSeat(int seatNumber)
+        {
+            if (!IsSeatReserved)
+            {
+                SeatNumber = seatNumber;
+                IsSeatReserved = true;
+                Console.WriteLine($"Seat {seatNumber} has been reserved for {Ad} {Soyad}.");
+            }
+            else
+            {
+                Console.WriteLine("Seat is already reserved.");
+            }
+        }
+
+        public void CancelReservation()
+        {
+            if (IsSeatReserved)
+            {
+                Console.WriteLine($"Reservation for {Ad} {Soyad} has been canceled.");
+                SeatNumber = 0;
+                IsSeatReserved = false;
+            }
+            else
+            {
+                Console.WriteLine("No reservation to cancel.");
+            }
+        }
+
+
     }
 }

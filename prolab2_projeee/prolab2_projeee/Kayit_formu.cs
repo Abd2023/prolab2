@@ -107,7 +107,7 @@ namespace prolab2_projeee
             yeniYolcu.Ad = txtYolcuAd.Text;
             yeniYolcu.Soyad = yolcuSoyadTxt.Text;
             yeniYolcu.TcNumara = TcNumaraTxt.Text;
-            yeniYolcu.DogumTarihi = dateTimePicker1.Value;
+            yeniYolcu.DogumTarihi = dateTimePicker1.Value.Date;
             yeniYolcu.KoltukNo = SecilenKoltukNo;
             // Koltuk numarasını da doldurmanız gerekiyor. Bu değeri nasıl alacağınıza bağlıdır.
             // Örneğin, Koltuk_Click metodunda seçilen koltuk numarasını bir özellikte saklayabilirsiniz.

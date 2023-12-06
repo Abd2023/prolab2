@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="UMLdiagrami.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AdminForm.resx">

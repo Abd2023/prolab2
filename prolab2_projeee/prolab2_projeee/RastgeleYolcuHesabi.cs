@@ -34,13 +34,17 @@ namespace prolab2_projeee
             }
             else if (HangiFirma == "D")
             {
-                biletkazanci = sefer1Hesap(25) + sefer2Hesap(25) + sefer2Hesap(25);
+                biletkazanci = sefer2Hesap(25) + sefer2Hesap(25);
             }
             else if (HangiFirma == "F")
             {
                 biletkazanci = sefer6Hesap(30) + sefer6Hesap(30);
             }
 
+            if(HangiFirma == "D")
+            {
+                biletkazanci += sefer1Hesap(25);
+            }
 
             return biletkazanci;
         }
@@ -60,7 +64,7 @@ namespace prolab2_projeee
             e = a - b - c - d;
 
             x = random.Next(0, kapasite - a + b + 1);
-            y = random.Next(0, kapasite - a + b - c + 1);
+            y = random.Next(0, kapasite - a + b -x + c + 1);
             z = random.Next(0, kapasite - a + b - x + c - y + d + 1);
             t = x - y - z;
 
@@ -100,7 +104,7 @@ namespace prolab2_projeee
             e = a - b - c - d;
 
             x = random.Next(0, kapasite - a + b + 1);
-            y = random.Next(0, kapasite - a + b - c + 1);
+            y = random.Next(0, kapasite - a + b -x + c + 1);
             z = random.Next(0, kapasite - a + b - x + c - y + d + 1);
             t = x - y - z;
 
