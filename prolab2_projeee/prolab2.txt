@@ -1,0 +1,1682 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class Admin_paneli : Form
+    {
+        public Admin_paneli()
+        {
+            InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        Dictionary<string, string> users = new Dictionary<string, string>()
+        {
+             { "a", "b" },
+        };
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (usrtxt.Text != string.Empty && passtxt.Text != string.Empty)
+            {
+                if (users.ContainsKey(usrtxt.Text))
+                {
+                    if (users[usrtxt.Text] == passtxt.Text)
+                    {
+                        MessageBox.Show("login Admin");
+
+                        AdminForm adminForm = new AdminForm();
+                        adminForm.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong Password");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Wrong User!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Fill Username & Password");
+            }
+        }
+
+        private void Admin_paneli_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace prolab2_projeee
+{
+
+
+
+    public partial class AdminForm : Form
+    {
+        private List<Company> companies = new List<Company>();
+
+        public AdminForm()
+        {
+            InitializeComponent();
+
+            Company companyA = new Company { name = "A", type = "Karayolu", serviceFee = 1000 };
+            Company companyB = new Company { name = "B", type = "Karayolu", serviceFee = 1000 };
+            Company companyC = new Company { name = "C", type = "Karayolu, Havayolu", serviceFee = 1000 };
+            Company companyD = new Company { name = "D", type = "Demiryolu", serviceFee = 1000 };
+            Company companyF = new Company { name = "F", type = "Havayolu", serviceFee = 1000 };
+
+            companies.Add(companyA);
+            companies.Add(companyB);
+            companies.Add(companyC);
+            companies.Add(companyD);
+            companies.Add(companyF);
+
+            UpdateListView();
+        }
+
+        private void eklebttn_Click(object sender, EventArgs e)
+        {
+            Company newCompany = new Company();
+            newCompany.name = firma_adi.Text;
+            newCompany.type = firma_turu.Text;
+            newCompany.serviceFee = decimal.Parse(hizmetBedeli.Text);
+
+            companies.Add(newCompany);
+
+            UpdateListView();
+        }
+
+        private void UpdateListView()
+        {
+            listView1.Items.Clear();
+            foreach (var company in companies)
+            {
+                ListViewItem item = new ListViewItem(company.name);
+                item.SubItems.Add(company.type);
+                item.SubItems.Add(company.serviceFee.ToString());
+                listView1.Items.Add(item);
+            }
+        }
+
+        private void cikartbttn_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                int selectedIndex = listView1.SelectedItems[0].Index;
+                companies.RemoveAt(selectedIndex);
+                listView1.Items.RemoveAt(selectedIndex);
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AdminForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+    }
+
+
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public class Customer
+    {
+        public string Ad { get; set; }
+        public string Soyad { get; set; }
+        public string TcNumara { get; set; }
+        public DateTime DogumTarihi { get; set; }
+        public int KoltukNo { get; set; }
+
+
+
+        public int SeatNumber { get; set; }
+        public bool IsSeatReserved { get; private set; }
+
+        public void ReserveSeat(int seatNumber)
+        {
+            if (!IsSeatReserved)
+            {
+                SeatNumber = seatNumber;
+                IsSeatReserved = true;
+                Console.WriteLine($"Seat {seatNumber} has been reserved for {Ad} {Soyad}.");
+            }
+            else
+            {
+                Console.WriteLine("Seat is already reserved.");
+            }
+        }
+
+        public void CancelReservation()
+        {
+            if (IsSeatReserved)
+            {
+                Console.WriteLine($"Reservation for {Ad} {Soyad} has been canceled.");
+                SeatNumber = 0;
+                IsSeatReserved = false;
+            }
+            else
+            {
+                Console.WriteLine("No reservation to cancel.");
+            }
+        }
+
+
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class FirmaPaneli : Form
+    {
+
+        // seferleri tutmak icin bir list olusturalim
+        List<Trip> tripList = new List<Trip>();
+
+        //araclari tutmak icin bir list olusturalim
+        List<Bus> buses = new List<Bus>();
+        List<Train> trainList = new List<Train>();
+        List<Airplane> airplanes = new List<Airplane>();
+
+        // giris yapilan firmanin adi
+
+        public string girisyapilanfirmaadi = firmapanelinegirispaneli.Firma_Adi;
+
+        public FirmaPaneli()
+        {
+            InitializeComponent();
+
+            // Trip adli classimizdan nesneleri olusturalim
+            // Trip trip = new Trip("demiryolu", "Istanbul - Kocaeli - Bilecik - Eski¸sehir - Ankara",);
+
+            //araclari olusturalim
+            Bus bus1 = new Bus("A", "otobus1", "benzin", "20", "3.sefer");
+            Bus bus2 = new Bus("A", "otobus2", "benzin", "15", "3.sefer");
+            Bus bus3 = new Bus("B", "otobus1", "benzin", "15", "3.sefer");
+            Bus bus4 = new Bus("B", "otobus2", "benzin", "20", "4.sefer");
+            Bus bus5 = new Bus("C", "otobus1", "benzin", "20", "4.sefer");
+
+            // listlere ekleme yapalim 
+
+            buses.Add(bus1);
+            buses.Add(bus2);
+            buses.Add(bus3);
+            buses.Add(bus4);
+            buses.Add(bus5);
+
+
+
+            Train train1 = new Train("D", "tren1", "elektrik", "25", "1.sefer");
+            Train train2 = new Train("D", "tren2", "elektrik", "25", "2.sefer");
+            Train train3 = new Train("D", "tren3", "elektrik", "25", "2.sefer");
+
+            // list e ekleme
+            trainList.Add(train1);
+            trainList.Add(train2);
+            trainList.Add(train3);
+
+
+            Airplane airplane1 = new Airplane("C", "ucak1", "gaz", "30", "5.sefer");
+            Airplane airplane2 = new Airplane("C", "ucak2", "gaz", "30", "5.sefer");
+            Airplane airplane3 = new Airplane("F", "ucak1", "gaz", "30", "6.sefer");
+            Airplane airplane4 = new Airplane("F", "ucak2", "gaz", "30", "6.sefer");
+
+            // liste ekleme
+            airplanes.Add(airplane1);
+            airplanes.Add(airplane2);
+            airplanes.Add(airplane3);
+            airplanes.Add(airplane4);
+
+            // sefer olusturalim
+            Trip trip1 = new Trip();
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (girisyapilanfirmaadi == "A")
+            {
+                dataGridView1.Rows.Add("Otobus1", "otobus", "benzin", "20", "3.sefer");
+                dataGridView1.Rows.Add("Otobus2", "otobus", "benzin", "15", "3.sefer");
+
+            }
+            else if (girisyapilanfirmaadi == "B")
+            {
+                dataGridView1.Rows.Add("otobus1", "otobus", "motorin", "15", "3.sefer");
+                dataGridView1.Rows.Add("otobus2", "otobus", "motorin", "20", "4.sefer");
+
+
+            }
+            else if (girisyapilanfirmaadi == "C")
+            {
+                dataGridView1.Rows.Add("otobus1", "otobus", "motorin", "20", "4.sefer");
+                dataGridView1.Rows.Add("ucak1", "ucak", "gaz", "30", "5.sefer");
+                dataGridView1.Rows.Add("ucak2", "ucak", "gaz", "30", "5.sefer");
+
+            }
+            else if (girisyapilanfirmaadi == "D")
+            {
+                dataGridView1.Rows.Add("tren1", "tren", "elektrik", "25", "1.sefer");
+                dataGridView1.Rows.Add("tren2", "tren", "elektrik", "25", "2.sefer");
+                dataGridView1.Rows.Add("tren3", "tren", "elektrik", "25", "2.sefer");
+
+            }
+            else if (girisyapilanfirmaadi == "F")
+            {
+                dataGridView1.Rows.Add("ucak1", "ucak", "gaz", "30", "6.sefer");
+                dataGridView1.Rows.Add("ucak2", "ucak", "gaz", "30", "6.sefer");
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string aracid = textBox1.Text;
+            string aractipi = comboBox2.Text;
+            string yakitturu = comboBox1.Text;
+            string kapasite = comboBox3.Text;
+            string seferno = comboBox7.Text;
+
+            dataGridView1.Rows.Add(aracid, aractipi, yakitturu, kapasite, seferno);
+
+            if (aractipi == "Otobus")
+            {
+                Bus bus = new Bus(girisyapilanfirmaadi, aracid, aractipi, kapasite, seferno);
+                buses.Add(bus);
+            }
+            else if (aractipi == "Tren")
+            {
+                Train train = new Train(girisyapilanfirmaadi, aracid, aractipi, kapasite, seferno);
+                trainList.Add(train);
+
+            }
+            else if (aractipi == "Ucak")
+            {
+                Airplane airplane = new Airplane(girisyapilanfirmaadi, aracid, aractipi, kapasite, seferno);
+                airplanes.Add(airplane);
+            }
+
+
+            MessageBox.Show("arac eklendi.");
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+
+
+            MessageBox.Show("arac silindi..");
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string aracid = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            string aractipi = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+            string yakitturu = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+            string kapasite = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+            string seferno = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+
+
+            textBox1.Text = aracid;
+            comboBox2.Text = aractipi;
+            comboBox1.Text = yakitturu;
+            comboBox3.Text = kapasite;
+            comboBox7.Text = seferno;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string aracturu = comboBox4.Text;
+            string guzergah = comboBox5.Text;
+            string zaman = comboBox6.Text;
+            string fiyat = textBox2.Text;
+            // string seferno=comboBox7.Text;
+
+            dataGridView2.Rows.Add(aracturu, guzergah, zaman, fiyat);
+
+            Trip trip = new Trip(girisyapilanfirmaadi, aracturu, guzergah, zaman, fiyat);
+
+
+
+            MessageBox.Show("sefer eklendi");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            dataGridView2.Rows.Remove(dataGridView2.CurrentRow);
+
+            MessageBox.Show("sefer silindi..");
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string aracturu = dataGridView2.CurrentRow.Cells[0].Value.ToString();
+            string guzergah = dataGridView2.CurrentRow.Cells[1].Value.ToString();
+            string zaman = dataGridView2.CurrentRow.Cells[2].Value.ToString();
+            string fiyat = dataGridView2.CurrentRow.Cells[3].Value.ToString();
+
+            comboBox4.Text = aracturu;
+            comboBox5.Text = guzergah;
+            comboBox6.Text = zaman;
+            textBox2.Text = fiyat;
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+      
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int isciUcretleritoplami=0;
+            int yakitgideri = 0;
+            int hizmetbedeli = 1000;
+            int toplamGider = 0;
+            
+
+            if(girisyapilanfirmaadi=="A")
+            {
+                isciUcretleritoplami = 7000*2*2;
+                yakitgideri = 500 * 10 * 2;
+                toplamGider=isciUcretleritoplami+yakitgideri+hizmetbedeli;
+
+
+            }
+            else if(girisyapilanfirmaadi == "B") 
+            {
+                isciUcretleritoplami = 4500*2*2;
+                yakitgideri = 500 * 5 * 2;
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi=="C") 
+            {
+                isciUcretleritoplami = (6000*2)+(16000*2*2);
+                yakitgideri = (600 * 6) + (300 * 25) * 2;
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi == "D")
+            {
+                isciUcretleritoplami = 3000*2*3;
+                yakitgideri = (375 * 3) + (450*3*2);
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+            else if (girisyapilanfirmaadi =="F")
+            {
+                isciUcretleritoplami = 11500*2*2;
+                yakitgideri = (250 * 20 * 2);
+                toplamGider = isciUcretleritoplami + yakitgideri + hizmetbedeli;
+
+            }
+
+
+            RastgeleYolcuHesabi rastgeleYolcuHesabi = new RastgeleYolcuHesabi();
+            int abdullah1 = rastgeleYolcuHesabi.Toplambiletsatisi();
+            dataGridView3.Rows.Add( abdullah1,isciUcretleritoplami.ToString() , yakitgideri.ToString(),hizmetbedeli,toplamGider,abdullah1-toplamGider);
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class firmapanelinegirispaneli : Form
+    {
+        public List<Company> sirketler = new List<Company>();
+
+        public static string Firma_Adi { get; private set; }  
+
+        Company companyA = new Company { name = "A", sifre = "afirmasi" };
+        Company companyB = new Company { name = "B", sifre = "bfirmasi" };
+        Company companyC = new Company { name = "C", sifre = "cfirmasi" };
+        Company companyD = new Company { name = "D", sifre = "dfirmasi" };
+        Company companyF = new Company { name = "F", sifre = "ffirmasi" };
+
+        public firmapanelinegirispaneli()
+        {
+            InitializeComponent();
+        }
+
+        private void firmapanelinegirispaneli_Load(object sender, EventArgs e)
+        {
+            sirketler.Add(companyA);
+            sirketler.Add(companyB);
+            sirketler.Add(companyC);
+            sirketler.Add(companyD);
+            sirketler.Add(companyF);
+        }
+
+        //asdfasf
+
+        private void bttnGiris_Click(object sender, EventArgs e)
+        {
+            string firmaAdi = txtBoxfirmaAdi.Text; ;
+            string firmaPassword = textBoxFirmaSifresi.Text;
+            bool girisBasarili = false;
+
+            foreach (Company company in sirketler)
+            {
+                if (firmaAdi == company.name && firmaPassword == company.sifre)
+                {
+                    Firma_Adi = firmaAdi;
+                    MessageBox.Show("giris basarili");
+                    girisBasarili = true;
+
+                    FirmaPaneli firmaPaneli = new FirmaPaneli();
+                    firmaPaneli.Show();
+
+                    // firma paneline yonlendir
+                    //Firmapanelics firmaPaneli = new Firmapanelics();
+                    //firmaPaneli.Show();
+                    break;
+                }
+            }
+
+            if (!girisBasarili)
+            {
+                MessageBox.Show("Başarısız");
+            }
+        }
+
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class Kayit_formu : Form
+    {
+
+        public string KoltukSayisi { get; set; }
+
+        public int SecilenKoltukNo { get; set; }
+
+        List<Customer> yolcular = new List<Customer>();
+
+        public Kayit_formu(string koltuk_sayisi)
+        {
+            InitializeComponent();
+
+            //this.KoltukSayisi = koltukSayisi;
+            int sira = int.Parse(koltuk_sayisi);
+
+            KoltukDoldur(sira );
+
+            RezerveKoltuklar();
+
+        }
+
+
+        void KoltukDoldur(int koltukSayisi)
+        {
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Button && ctrl.Text != "Kaydet")
+                {
+                    this.Controls.Remove(ctrl);
+                }
+            }
+
+            int koltukNo = 1;
+            for (int i = 0; i < koltukSayisi / 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Button koltuk = new Button();
+                    koltuk.Height = koltuk.Width = 40;
+                    koltuk.Top = 30 + (i * 45);
+                    koltuk.Left = 5 + (j * 45);
+                    koltuk.Text = koltukNo.ToString();
+                    koltuk.Click += Koltuk_Click; 
+                    koltukNo++;
+                    this.Controls.Add(koltuk);
+                }
+            }
+
+            for (int j = 0; j < koltukSayisi % 4; j++)
+            {
+                Button koltuk = new Button();
+                koltuk.Height = koltuk.Width = 40;
+                koltuk.Top = 30 + ((koltukSayisi / 4) * 45);
+                koltuk.Left = 5 + (j * 45);
+                koltuk.Text = koltukNo.ToString();
+                koltuk.Click += Koltuk_Click;  
+                koltukNo++;
+                this.Controls.Add(koltuk);
+            }
+        }
+
+
+
+        private void Koltuk_Click(object sender, EventArgs e)
+        {
+            Button koltuk = sender as Button;
+            int koltukNo = int.Parse(koltuk.Text);
+
+            SecilenKoltukNo = koltukNo;
+
+            if (koltuk.BackColor == Color.Red || koltuk.BackColor == Color.Green)
+            {
+                MessageBox.Show("Koltuk " + koltukNo + " rezerve edilmiş durumda ve seçilemez!");
+            }
+            else
+            {
+                koltuk.BackColor = Color.Green;
+                MessageBox.Show("Koltuk " + koltukNo + " seçildi!");
+            }
+        }
+
+
+        private void bttnKayit_Click(object sender, EventArgs e)
+        {
+            Customer yeniYolcu = new Customer();
+            yeniYolcu.Ad = txtYolcuAd.Text;
+            yeniYolcu.Soyad = yolcuSoyadTxt.Text;
+            yeniYolcu.TcNumara = TcNumaraTxt.Text;
+            yeniYolcu.DogumTarihi = dateTimePicker1.Value.Date;
+            yeniYolcu.KoltukNo = SecilenKoltukNo;
+
+            yolcular.Add(yeniYolcu);
+
+            UpdateDataGridView();
+
+            MessageBox.Show("Bilgiler kaydedildi!\n" + yeniYolcu.Ad + " yolcuSoydı : " + yeniYolcu.Soyad + "TC numarası : " + yeniYolcu.TcNumara + "yolcunun doğum tarihi : " + yeniYolcu.DogumTarihi + " ve yocunun koltuk numarası " + yeniYolcu.KoltukNo);
+        }
+
+
+
+
+        private void Kayit_formu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtYolcuAd_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void yolcuSoyadTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TcNumaraTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void RezerveKoltuklar()
+        {
+            Random random = new Random();
+            List<int> bosKoltuklar = new List<int>();
+
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Button && ctrl.BackColor != Color.Red && ctrl.Text != "Kaydet")
+                {
+                    bosKoltuklar.Add(int.Parse(ctrl.Text));
+                }
+            }
+
+            int koltukSayisi = bosKoltuklar.Count;
+            int rezerveEdilecekKoltukSayisi = koltukSayisi / 2;  
+
+            for (int i = 0; i < rezerveEdilecekKoltukSayisi; i++)
+            {
+                int index = random.Next(0, koltukSayisi);
+                int koltukNo = bosKoltuklar[index];
+
+                foreach (Control ctrl in this.Controls)
+                {
+                    if (ctrl is Button && ctrl.Text == koltukNo.ToString())
+                    {
+                        ctrl.BackColor = Color.Red;
+                        break;
+                    }
+                }
+
+                bosKoltuklar.RemoveAt(index);
+                koltukSayisi--;
+            }
+        }
+
+
+        private void UpdateDataGridView()
+        {
+            dataGridView1.Rows.Clear();
+
+            foreach (Customer yolcu in yolcular)
+            {
+                dataGridView1.Rows.Add(yolcu.Ad, yolcu.Soyad, yolcu.TcNumara, yolcu.DogumTarihi.ToString(), yolcu.KoltukNo);
+            }
+        }
+
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string yolcuAdi = txtYolcuAd.Text;
+            string yolcuSoyad = yolcuSoyadTxt.Text;
+            int yolcuTc = int.Parse(TcNumaraTxt.Text);
+            string yolcuTcnumarasi = (yolcuTc).ToString();
+            DateTime dogumTarih = dateTimePicker1.Value;
+
+            string yolcuDogumTarihi = dogumTarih.ToString();
+
+            dataGridView1.Rows.Add(yolcuAdi, yolcuSoyad, yolcuTcnumarasi, yolcuDogumTarihi);
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class Kullanici_paneli : Form
+    {
+       
+        
+        private List<Company> companies;
+
+
+
+        private List<Dictionary<string, int>> routesKarayolu = new List<Dictionary<string, int>>
+        {
+            new Dictionary<string, int> { { "İstanbul-Kocaeli", 50 }, { "İstanbul-Ankara", 300 }, { "İstanbul-Eskişehir", 150 }, { "İstanbul-Konya", 300 } },
+            new Dictionary<string, int> { { "Kocaeli-İstanbul", 50 }, { "Kocaeli-Ankara", 400 }, { "Kocaeli-Eskişehir", 100 }, { "Kocaeli-Konya", 250 } },
+            new Dictionary<string, int> { { "Ankara-İstanbul", 300 }, { "Ankara-Kocaeli", 400 } },
+            new Dictionary<string, int> { { "Eskişehir-İstanbul", 150 }, { "Eskişehir-Kocaeli", 100 }, { "Eskişehir-Konya", 150 } },
+            new Dictionary<string, int> { { "Konya-Kocaeli", 300 }, { "Konya-Ankara", 150 }, { "Konya-Eskişehir", 150 } },
+        };
+
+
+        private List<Dictionary<string, int>> routesDemiryolu = new List<Dictionary<string, int>>
+        {
+            new Dictionary<string, int> { { "İstanbul-Kocaeli", 50 }, { "İstanbul-Bilecik", 150},{ "İstanbul-Ankara", 250 }, { "İstanbul-Eskişehir", 200 }, { "İstanbul-Konya", 300 } },
+            new Dictionary<string, int> { { "Kocaeli-İstanbul", 50 }, { "Kocaeli-Bilecik", 50 }, { "Kocaeli-Ankara", 200 }, { "Kocaeli-Eskişehir", 100 }, { "Kocaeli-Konya", 250 } },
+            new Dictionary<string, int> { { "Bilecik-İstanbul", 150 }, { "Bilecik-Kocaeli", 50},{ "Bilecik-Ankara", 150 }, { "Bilecik-Eskişehir", 50 }, { "Bilecik-Konya", 200 } },
+            new Dictionary<string, int> { { "Ankara-İstanbul", 250 }, { "Ankara-Bilecik", 150 }, { "Ankara-Kocaeli", 200 }, {"Ankara-Eskişehir", 100 } },
+            new Dictionary<string, int> { { "Eskişehir-İstanbul", 200 }, { "Eskişehir-Bilecik", 50 }, { "Eskişehir-Kocaeli", 100 }, { "Eskişehir-Ankara", 100},{ "Eskişehir-Konya", 150 } },
+            new Dictionary<string, int> { {"Konya-İstanbul", 300}, { "Konya-Kocaeli", 300 }, { "Konya-Bilecik", 200 }, { "Konya-Eskişehir", 150 } },
+        };
+
+        private List<Dictionary<String, int>> routesHavayolu = new List<Dictionary<string, int>>
+        {
+            new Dictionary<string, int> { { "İstanbul-Ankara", 1000 }, { "İstanbul-Konya", 1200 } },
+            new Dictionary<string, int> { {"Ankara-İstanbul", 1000} },
+            new Dictionary<string, int> { { "Konya-İstanbul", 1200} }
+        };
+
+
+        public Kullanici_paneli()
+        {
+            InitializeComponent();
+            
+
+        }
+
+        private void NeredencomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NereyecomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        string[][] routesSefer = new string[][]
+        {
+            new string[] { "İstanbul", "Kocaeli", "Bilecik", "Eskişehir", "Ankara", "Eskişehir", "Bilecik", "Kocaeli", "İstanbul" },
+            new string[] { "İstanbul", "Kocaeli", "Bilecik", "Eskişehir", "Konya", "Eskişehir", "Bilecik", "Kocaeli", "İstanbul" },
+
+            new string[] { "İstanbul", "Kocaeli", "Ankara", "Kocaeli", "İstanbul", "Kocaeli", "Ankara", "Kocaeli", "İstanbul" },
+            new string[] { "İstanbul", "Kocaeli", "Eskişehir", "Konya", "Eskişehir", "Kocaeli", "İstanbul" },
+
+            new string[] {  "İstanbul", "Konya", "İstanbul" },
+            new string[] { "İstanbul", "Ankara", "İstanbul" },
+        };
+
+
+        string[][] bilgiler = new string[][]
+        {
+            new string[] {"3", "20", "Otobüs 1", "A"},
+            new string[] {"3", "15", "Otobüs 2", "A"},
+            new string[] {"3", "15", "Otobüs 1", "B"},
+            new string[] {"4", "20", "Otobüs 2", "B"},
+            new string[] {"4", "20", "Otobüs 1", "C"},
+            new string[] {"5", "30", "Uçak 1", "C"},
+            new string[] {"5", "30", "Uçak 2", "C"},
+            new string[] {"1", "25", "Tren 1", "D"},
+            new string[] {"2", "25", "Tren 2", "D"},
+            new string[] {"2", "25", "Tren 3", "D"},
+            new string[] {"6", "30", "Uçak 1", "F"},
+            new string[] {"6", "30", "Uçak 2", "F"},
+        };
+
+
+        public static string firma_adi;
+        public static string firma_araci;
+        public static string koltuk_sayisi;
+
+        private void bttnBiletAra_Click(object sender, EventArgs e)
+        {
+
+            dataGridView1.Rows.Clear();
+            
+            string departure = NeredencomboBox.SelectedItem.ToString();
+            string arrival = NereyecomboBox.SelectedItem.ToString();
+
+            List<int> uygubSerferler = new List<int>();
+
+            for (int i = 0; i < routesSefer.Length; i++)
+            {
+                for (int j = 0; j < routesSefer[i].Length; j++)
+                {
+                    if (routesSefer[i][j] == departure)
+                    {
+                        for (int k = 0; k < routesSefer[i].Length; k++)
+                        {
+                            if (routesSefer[i][k] == arrival)
+                            {
+                                if (!uygubSerferler.Contains(i + 1))
+                                    uygubSerferler.Add(i + 1);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                
+
+            }
+            
+        string searchKey = departure + "-" + arrival;
+
+        int costDemiryolu = 0;
+        foreach (var route in routesDemiryolu)
+        {
+            if (route.ContainsKey(searchKey))
+            {
+                costDemiryolu = route[searchKey];
+            }
+        }
+        int costKarayolu = 0;
+        foreach (var route in routesKarayolu)
+        {
+            if (route.ContainsKey(searchKey))
+            {
+                costKarayolu = route[searchKey];
+            }
+        }
+
+        int costHavayolu = 0;
+        foreach (var route in routesHavayolu)
+        {
+            if (route.ContainsKey(searchKey))
+            {
+                costHavayolu = route[searchKey];
+                
+            }
+        }
+
+
+        for (int i = 0; i < bilgiler.Length; i++)
+        {
+            int seferNo = int.Parse(bilgiler[i][0]);
+            if (uygubSerferler.Contains(seferNo))
+            {
+                firma_adi = bilgiler[i][3];
+                firma_araci = bilgiler[i][2];
+                koltuk_sayisi = bilgiler[i][1];
+                if(firma_araci.Contains("Tren"))
+                    dataGridView1.Rows.Add(firma_adi, firma_araci, koltuk_sayisi, costDemiryolu);
+                else if(firma_araci.Contains("Otobüs"))
+                    dataGridView1.Rows.Add(firma_adi, firma_araci, koltuk_sayisi, costKarayolu);
+                else if(firma_araci.Contains("Uçak"))
+                     dataGridView1.Rows.Add(firma_adi, firma_araci, koltuk_sayisi, costHavayolu);
+                    //MessageBox.Show("Firma adi : " + bilgiler[i][3] + " firma araci : " + bilgiler[i][2] + " koltuk Sayisi : " + bilgiler[i][1]);
+            }
+        }
+
+        /*
+        Kayit_formu form = new Kayit_formu(koltuk_sayisi);
+        form.ShowDialog();
+        */
+
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                koltuk_sayisi = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+
+                Kayit_formu form = new Kayit_formu(koltuk_sayisi);
+                form.ShowDialog();
+            }
+        }
+
+        private void Kullanici_paneli_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+
+
+}
+using System;
+
+namespace prolab2_projeee
+{
+    public abstract class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    public class Personel : Person
+    {
+        public int AfirmasiTopolamOtobusOdenenUcret = 14000;
+    }
+
+    public class Passenger : Person
+    {
+        public bool HasReservation { get; set; }
+
+        public void MakeReservation()
+        {
+            HasReservation = true;
+            Console.WriteLine($"{FirstName} {LastName} has made a reservation.");
+        }
+
+        public void CancelReservation()
+        {
+            if (HasReservation)
+            {
+                HasReservation = false;
+                Console.WriteLine($"{FirstName} {LastName}'s reservation has been canceled.");
+            }
+            else
+            {
+                Console.WriteLine($"{FirstName} {LastName} doesn't have a reservation to cancel.");
+            }
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+
+namespace prolab2_projeee
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            System.Windows.Forms.Application.Run(new Rezervasiyon_Sistemi());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Rezervasiyon_Sistemi());
+        }
+
+
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public class RastgeleYolcuHesabi
+    {
+        public int sefernumarasi { get; set; }
+
+        int a=0, b=0, c= 0, d = 0 , e = 0, x = 0, y = 0, z = 0, t = 0, k = 0, m = 0, n = 0, p = 0, r = 0;
+        
+        int toplamUcret = 0;
+        int biletkazanci = 0;
+
+        public string HangiFirma = firmapanelinegirispaneli.Firma_Adi;
+        
+        public int Toplambiletsatisi()
+        {
+            if (HangiFirma == "A")
+            {
+                biletkazanci = sefer3Hesap(20) + sefer3Hesap(15);
+               
+            }
+            else if(HangiFirma == "B")
+            {
+                biletkazanci = sefer3Hesap(15) + sefer4Hesap(20);
+            }
+            else if (HangiFirma == "C")
+            {
+                biletkazanci = sefer4Hesap(20) + sefer5Hesap(30) + sefer5Hesap(30);
+            }
+            else if (HangiFirma == "D")
+            {
+                biletkazanci = sefer2Hesap(25) + sefer2Hesap(25);
+            }
+            else if (HangiFirma == "F")
+            {
+                biletkazanci = sefer6Hesap(30) + sefer6Hesap(30);
+            }
+
+            if(HangiFirma == "D")
+            {
+                biletkazanci += sefer1Hesap(25);
+            }
+
+            return biletkazanci;
+        }
+
+        public int sefer1Hesap(int kapasite)
+        {
+            int a = 0, b = 0, c = 0, d = 0, e = 0, x = 0, y = 0, z = 0, t = 0, k = 0, m = 0, n = 0, p = 0, r = 0;
+
+            toplamUcret = 0;
+            // sefer1 (demiryolu) hesabını yapar 
+
+            Random random = new Random();
+            a = random.Next(15, kapasite + 1);
+            b = random.Next(0, a + 1);
+            c = random.Next(0, a - b + 1);
+            d = random.Next(0, a - b - c + 1);
+            e = a - b - c - d;
+
+            x = random.Next(0, kapasite - a + b + 1);
+            y = random.Next(0, kapasite - a + b -x + c + 1);
+            z = random.Next(0, kapasite - a + b - x + c - y + d + 1);
+            t = x - y - z;
+
+            k = random.Next(0, kapasite - a + b + c - x + y + 1);
+            m = random.Next(0, kapasite - a + b + c - x + y - k + z + 1);
+            n = k - m;
+
+            p = random.Next(0, kapasite - a + b + c + d - x + y - k + m + 1);
+            r = p;
+           
+            // Console.WriteLine(a+" "+b+" " +c+" "+" "+d+" "+e+" "+y+" "+z+" "+t+" "+k+ " "+m+" "+n +" "+p+ " "+r);
+            
+            //ist kocaeli 50,ist bilecik 150 , ist eskişehir 200 ,ist ankara 250 
+            toplamUcret = toplamUcret + (50 * b) + (150 * c) + (200 * d) + (250 * e);
+
+            // kocaeli bilecik 50 , kocaeli eskişehir 100 ,kocaeli ankara 200
+            toplamUcret = toplamUcret + (y * 50) + (z * 100) + (t * 200);
+
+            //bilecik eskişehir 50  bilecik ankara 150
+            toplamUcret = toplamUcret + (m * 50) + (n * 150);
+
+            //eskişehir ankara 100
+            toplamUcret = toplamUcret + (100 * r);
+
+            return toplamUcret;
+        }
+
+        public int sefer2Hesap(int kapasite)
+        {
+            toplamUcret = 0;
+
+            Random random = new Random();
+            a = random.Next(20, kapasite + 1);
+            b = random.Next(0, a + 1);
+            c = random.Next(0, a - b + 1);
+            d = random.Next(0, a - b - c + 1);
+            e = a - b - c - d;
+
+            x = random.Next(0, kapasite - a + b + 1);
+            y = random.Next(0, kapasite - a + b -x + c + 1);
+            z = random.Next(0, kapasite - a + b - x + c - y + d + 1);
+            t = x - y - z;
+
+            k = random.Next(0, kapasite - a + b + c - x + y + 1);
+            m = random.Next(0, kapasite - a + b + c - x + y - k + z + 1);
+            n = k - m;
+
+            p = random.Next(0, kapasite - a + b + c + d - x + y - k + m + 1);
+            r = p;
+
+            //ist kocaeli 50,ist bilecik 150 , ist eskişehir 200 ,ist konya 300 
+            toplamUcret = toplamUcret + (50 * b) + (150 * c) + (200 * d) + (300 * e);
+
+            // kocaeli bilecik 50 , kocaeli eskişehir 100 ,kocaeli ankara 250
+            toplamUcret = toplamUcret + (y * 50) + (z * 100) + (t * 250);
+
+            //bilecik eskişehir 50  bilecik ankara 200
+            toplamUcret = toplamUcret + (m * 50) + (n * 200);
+
+            //eskişehir ankara 150
+            toplamUcret = toplamUcret + (150 * r);
+
+
+            return toplamUcret;
+        }
+
+        public int sefer3Hesap(int kapasite)
+        {
+            toplamUcret = 0;
+
+            Random random2 = new Random();
+            a = random2.Next(15, kapasite + 1);
+            b = random2.Next(0, a+1);
+            c = a - b;
+
+            x = random2.Next(0, kapasite - a + b + 1);
+            y = x;
+
+            // ist kocaeli 50 , ist ankara 300
+            toplamUcret = toplamUcret + (50 * b) + (300 * c);
+
+            //kocaeli ankara 400 
+            toplamUcret = toplamUcret + (400 * y);
+
+            return toplamUcret;
+        }
+
+        public int sefer4Hesap(int kapasite)
+        {
+            toplamUcret = 0;
+
+            Random random3 = new Random();
+            a = random3.Next(15, kapasite + 1);
+            b = random3.Next(0, a + 1);
+            c = random3.Next(0, a - b + 1);
+            d = a - b - c;
+
+            x = random3.Next(0, kapasite - a + b + 1);
+            y = random3.Next(0, kapasite - a + b - x + 1);
+            z = x - y;
+
+            k = random3.Next(0, kapasite - a + b + c - x + y + 1);
+            m = k;
+
+            // ist kocaeli 50 , ist eskişehir 150 ,ist konya300
+            toplamUcret = toplamUcret + (b * 50) + (c * 150) + (d * 300);
+
+            // kocaeli eskişehir 100, kocaeli konya 250
+            toplamUcret = toplamUcret + (y * 100) + (z * 250);
+
+            // eskişehir konya 150
+            toplamUcret = toplamUcret + (m * 150);
+
+
+            return toplamUcret;
+
+        }
+        public int sefer5Hesap(int kapasite)
+        {
+            toplamUcret = 0;
+
+            Random random4 = new Random();
+            a = random4.Next(25, kapasite + 1);
+            b = a;
+
+            // ist konya 1200
+            toplamUcret = toplamUcret + (b * 1200);
+
+            return toplamUcret;
+        }
+        public int sefer6Hesap(int kapasite)
+        {
+            toplamUcret = 0;
+
+            Random rand5 = new Random();
+            a = rand5.Next(25, kapasite + 1);
+            b = a;
+
+            //ist ankara 1000
+            toplamUcret = toplamUcret + (b * 1000);
+
+            return toplamUcret;
+        }
+
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public class Reservation
+    {
+        // Yolcu, araç ve koltuk bilgisi burada tanımlanır
+    }
+
+}
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace prolab2_projeee
+{
+    public partial class Rezervasiyon_Sistemi : Form
+    {
+        public Rezervasiyon_Sistemi()
+        {
+            InitializeComponent();
+        }
+
+        private void adminbttn_Click(object sender, EventArgs e)
+        {
+            Admin_paneli form = new Admin_paneli();
+            //form.Show();
+            form.ShowDialog();
+        }
+
+        private void kullanicibttn_Click(object sender, EventArgs e)
+        {
+            Kullanici_paneli form = new Kullanici_paneli();
+            form.ShowDialog();
+        }
+
+        private void firmabttn_Click(object sender, EventArgs e)
+        {
+            firmapanelinegirispaneli firmaPaneli = new firmapanelinegirispaneli();
+            firmaPaneli.Show();
+        }
+
+        private void Rezervasiyon_Sistemi_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public class Route
+    {
+        public string Name { get; set; }  
+        public string Departure { get; set; }  
+        public string Arrival { get; set; }  
+        public List<string> Stops { get; set; }  
+        public string TransportType { get; set; }  
+
+        public Route(string name, string departure, string arrival, List<string> stops, string transportType)
+        {
+            Name = name;
+            Departure = departure;
+            Arrival = arrival;
+            Stops = stops;
+            TransportType = transportType;
+        }
+    }
+
+
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+
+    public interface IReservable
+    {
+        bool koltukRezerveMI { get; set; }
+        void KoltukRezervet();
+        void IptalRezervasyon();
+    }
+
+
+    public class Transport : IReservable
+    {
+        public bool koltukRezerveMI { get; set; }
+        
+
+        public void KoltukRezervet()
+        {
+            if (!koltukRezerveMI)
+            {
+                koltukRezerveMI = true;
+                Console.WriteLine("Seat reserved successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Seat is already reserved.");
+            }
+        }
+
+        public void IptalRezervasyon()
+        {
+            if (koltukRezerveMI)
+            {
+                koltukRezerveMI = false;
+                Console.WriteLine("Reservation canceled successfully.");
+            }
+            else
+            {
+                Console.WriteLine("No reservation to cancel.");
+            }
+        }
+    }
+
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public class Trip
+    {
+        public string HangiFirma { get; set; }
+        public string Aracturu { get; set; }
+        public string Guzergah { get; set; }
+        public string Zamani { get; set; }
+        public string Fiyati { get; set; }
+
+        public Trip()
+        {
+
+        }
+        public Trip(string hangifirma, string aracturu, string guzergah, string zamani, string fiyati)
+        {
+            HangiFirma = hangifirma;
+            Aracturu = aracturu;
+            Guzergah = guzergah;
+            Zamani = zamani;
+            Fiyati = fiyati;
+        }
+
+
+    }
+
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace prolab2_projeee
+{
+
+    public interface IProfitable
+    {
+        void gunlukKarhesabi();
+        void genelKarhesabi();
+    }
+
+    
+
+
+    public interface ILoginable
+    {
+        bool Login(string enteredUsername, string enteredPassword);
+    }
+
+    public abstract class User : ILoginable
+    {
+        protected string username;
+        protected string password;
+
+        public bool Login(string enteredUsername, string enteredPassword)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Admin : User
+    {
+
+
+
+        public List<Company> Companies { get; set; }
+
+        public void AddCompany(Company company)
+        {
+        }
+
+        public void RemoveCompany(Company company)
+        {
+        }
+
+        public decimal ServiceFee { get; set; }
+
+    }
+
+
+
+
+
+
+
+
+    public class Company : User, IProfitable, IReservable
+    {
+        public string name { get; set; }
+        public string Name { get; set; }
+        public string type { get; set; }
+        public decimal serviceFee { get; set; }
+
+        public string sifre { get; set; }
+        public List<Vehicle> Vehicles { get; set; }
+
+        private List<Vehicle> vehicles;
+        private List<Trip> trips;
+
+        public void AddVehicle(Vehicle vehicle)
+        {
+            Vehicles.Add(vehicle);
+        }
+
+        public void RemoveVehicle(Vehicle vehicle)
+        {
+            Vehicles.Remove(vehicle);
+        }
+
+        public void AddTrip(Trip trip)
+        {
+            // Add trip logic
+        }
+
+        public void RemoveTrip(Trip trip)
+        {
+            // Remove trip logic
+        }
+
+        public decimal CalculateDailyProfit()
+        {
+            // Calculate daily profit logic
+            return 0; // Placeholder, replace with actual calculation
+        }
+
+        public void gunlukKarhesabi()
+        {
+            // Implement the daily profit calculation logic
+        }
+
+        public void genelKarhesabi()
+        {
+            // Implement the general profit calculation logic
+        }
+
+        public bool IsSeatReserved { get; set; }
+        public bool koltukRezerveMI { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void ReserveSeat()
+        {
+            // Implement seat reservation logic
+        }
+
+        public void CancelReservation()
+        {
+            // Implement seat cancellation logic
+        }
+
+        public void KoltukRezervet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IptalRezervasyon()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+
+
+    public class UserPanel : User
+    {
+        // Kullanıcı paneli için gerekli özellikler ve metotlar burada tanımlanır
+    }
+
+
+}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace prolab2_projeee
+{
+    public abstract class Vehicle
+    {
+        public string HangiFirma { get; set; }
+        public string AracID { get; set; }
+        public string YakitTuru { get; set; }
+        public string Kapasite { get; set; }
+        public string SeferNo { get; set; }
+    }
+
+    public class Otobus : Vehicle
+    {
+        public string Ad { get; set; }
+        public int KoltukSayisi { get; set; }
+        public int SeferNo { get; set; }
+
+        public Otobus(string ad, int koltukSayisi, int seferNo)
+        {
+            Ad = ad;
+            KoltukSayisi = koltukSayisi;
+            SeferNo = seferNo;
+        }
+    }
+
+    public class Bus : Vehicle
+    {
+        public Bus(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
+        {
+            this.HangiFirma = hangifirma;
+            this.AracID = aracid;
+            this.YakitTuru = yakitturu;
+            this.Kapasite = kapasite;
+            this.SeferNo = seferno;
+        }
+
+        public Bus(string arac, string koltukSayisi, string seferNo)
+        {
+            
+            this.AracID = arac;
+            
+            this.Kapasite = koltukSayisi;
+            this.SeferNo = seferNo;
+        }
+    }
+
+    public class Train : Vehicle
+    {
+        public Train(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
+        {
+            this.HangiFirma = hangifirma;
+            this.AracID = aracid;
+            this.YakitTuru = yakitturu;
+            this.Kapasite = kapasite;
+            this.SeferNo = seferno;
+        }
+    }
+
+    public class Airplane : Vehicle
+    {
+        public Airplane(string hangifirma, string aracid, string yakitturu, string kapasite, string seferno)
+        {
+            this.HangiFirma = hangifirma;
+            this.AracID = aracid;
+            this.YakitTuru = yakitturu;
+            this.Kapasite = kapasite;
+            this.SeferNo = seferno;
+        }
+    }
+}
+
