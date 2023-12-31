@@ -33,10 +33,6 @@ namespace prolab2_projeee
         }
     }
 
-
-    
-
-
     public class Admin : User
     {
 
